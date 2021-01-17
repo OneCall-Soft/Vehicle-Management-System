@@ -1,0 +1,412 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="approve_quantities">
+          <Key>
+            <PropertyRef Name="aqid" />
+          </Key>
+          <Property Name="aqid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="approve_quantity" Type="int" Nullable="false" />
+          <Property Name="approve_datetime" Type="datetime" Nullable="false" />
+          <Property Name="mid" Type="int" Nullable="false" />
+          <Property Name="loginid" Type="int" Nullable="false" />
+          <Property Name="pqid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dispatch_quantities">
+          <Key>
+            <PropertyRef Name="dqid" />
+          </Key>
+          <Property Name="dqid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dispatch_quantity" Type="int" Nullable="false" />
+          <Property Name="dispatch_datetime" Type="datetime" Nullable="false" />
+          <Property Name="mid" Type="int" Nullable="false" />
+          <Property Name="loginid" Type="int" Nullable="false" />
+          <Property Name="aqid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="loginid" />
+          </Key>
+          <Property Name="loginid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userpass" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="modal_details">
+          <Key>
+            <PropertyRef Name="mid" />
+          </Key>
+          <Property Name="mid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="modal_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="modal_color" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="plan_quantities">
+          <Key>
+            <PropertyRef Name="pqid" />
+          </Key>
+          <Property Name="pqid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plan_quantity" Type="int" Nullable="false" />
+          <Property Name="plan_datetime" Type="datetime" Nullable="false" />
+          <Property Name="mid" Type="int" Nullable="false" />
+          <Property Name="loginid" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_approve_quantities_approve_quantities">
+          <End Role="approve_quantities" Type="Self.approve_quantities" Multiplicity="1" />
+          <End Role="approve_quantities1" Type="Self.approve_quantities" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="approve_quantities">
+              <PropertyRef Name="aqid" />
+            </Principal>
+            <Dependent Role="approve_quantities1">
+              <PropertyRef Name="aqid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_approve_quantities_modal_details">
+          <End Role="modal_details" Type="Self.modal_details" Multiplicity="1" />
+          <End Role="approve_quantities" Type="Self.approve_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modal_details">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="approve_quantities">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dispatch_quantities_approve_quantities">
+          <End Role="approve_quantities" Type="Self.approve_quantities" Multiplicity="1" />
+          <End Role="dispatch_quantities" Type="Self.dispatch_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="approve_quantities">
+              <PropertyRef Name="aqid" />
+            </Principal>
+            <Dependent Role="dispatch_quantities">
+              <PropertyRef Name="aqid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dispatch_quantities_modal_details">
+          <End Role="modal_details" Type="Self.modal_details" Multiplicity="1" />
+          <End Role="dispatch_quantities" Type="Self.dispatch_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modal_details">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="dispatch_quantities">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_quantities_Logins">
+          <End Role="Logins" Type="Self.Logins" Multiplicity="1" />
+          <End Role="plan_quantities" Type="Self.plan_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Logins">
+              <PropertyRef Name="loginid" />
+            </Principal>
+            <Dependent Role="plan_quantities">
+              <PropertyRef Name="loginid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_quantities_modal_details">
+          <End Role="modal_details" Type="Self.modal_details" Multiplicity="1" />
+          <End Role="plan_quantities" Type="Self.plan_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modal_details">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="plan_quantities">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VMSModelStoreContainer">
+          <EntitySet Name="approve_quantities" EntityType="Self.approve_quantities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dispatch_quantities" EntityType="Self.dispatch_quantities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="modal_details" EntityType="Self.modal_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="plan_quantities" EntityType="Self.plan_quantities" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_approve_quantities_approve_quantities" Association="Self.FK_approve_quantities_approve_quantities">
+            <End Role="approve_quantities" EntitySet="approve_quantities" />
+            <End Role="approve_quantities1" EntitySet="approve_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_approve_quantities_modal_details" Association="Self.FK_approve_quantities_modal_details">
+            <End Role="modal_details" EntitySet="modal_details" />
+            <End Role="approve_quantities" EntitySet="approve_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dispatch_quantities_approve_quantities" Association="Self.FK_dispatch_quantities_approve_quantities">
+            <End Role="approve_quantities" EntitySet="approve_quantities" />
+            <End Role="dispatch_quantities" EntitySet="dispatch_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dispatch_quantities_modal_details" Association="Self.FK_dispatch_quantities_modal_details">
+            <End Role="modal_details" EntitySet="modal_details" />
+            <End Role="dispatch_quantities" EntitySet="dispatch_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_quantities_Logins" Association="Self.FK_plan_quantities_Logins">
+            <End Role="Logins" EntitySet="Logins" />
+            <End Role="plan_quantities" EntitySet="plan_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_quantities_modal_details" Association="Self.FK_plan_quantities_modal_details">
+            <End Role="modal_details" EntitySet="modal_details" />
+            <End Role="plan_quantities" EntitySet="plan_quantities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="approve_quantities">
+          <Key>
+            <PropertyRef Name="aqid" />
+          </Key>
+          <Property Name="aqid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="approve_quantity" Type="Int32" Nullable="false" />
+          <Property Name="approve_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mid" Type="Int32" Nullable="false" />
+          <Property Name="loginid" Type="Int32" Nullable="false" />
+          <Property Name="pqid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="approve_quantities1" Relationship="Self.FK_approve_quantities_approve_quantities" FromRole="approve_quantities" ToRole="approve_quantities1" />
+          <NavigationProperty Name="approve_quantities2" Relationship="Self.FK_approve_quantities_approve_quantities" FromRole="approve_quantities1" ToRole="approve_quantities" />
+          <NavigationProperty Name="modal_details" Relationship="Self.FK_approve_quantities_modal_details" FromRole="approve_quantities" ToRole="modal_details" />
+          <NavigationProperty Name="dispatch_quantities" Relationship="Self.FK_dispatch_quantities_approve_quantities" FromRole="approve_quantities" ToRole="dispatch_quantities" />
+        </EntityType>
+        <EntityType Name="dispatch_quantities">
+          <Key>
+            <PropertyRef Name="dqid" />
+          </Key>
+          <Property Name="dqid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dispatch_quantity" Type="Int32" Nullable="false" />
+          <Property Name="dispatch_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mid" Type="Int32" Nullable="false" />
+          <Property Name="loginid" Type="Int32" Nullable="false" />
+          <Property Name="aqid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="approve_quantities" Relationship="Self.FK_dispatch_quantities_approve_quantities" FromRole="dispatch_quantities" ToRole="approve_quantities" />
+          <NavigationProperty Name="modal_details" Relationship="Self.FK_dispatch_quantities_modal_details" FromRole="dispatch_quantities" ToRole="modal_details" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="loginid" />
+          </Key>
+          <Property Name="loginid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userpass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="plan_quantities" Relationship="Self.FK_plan_quantities_Logins" FromRole="Logins" ToRole="plan_quantities" />
+        </EntityType>
+        <EntityType Name="modal_details">
+          <Key>
+            <PropertyRef Name="mid" />
+          </Key>
+          <Property Name="mid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="modal_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="modal_color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="approve_quantities" Relationship="Self.FK_approve_quantities_modal_details" FromRole="modal_details" ToRole="approve_quantities" />
+          <NavigationProperty Name="dispatch_quantities" Relationship="Self.FK_dispatch_quantities_modal_details" FromRole="modal_details" ToRole="dispatch_quantities" />
+          <NavigationProperty Name="plan_quantities" Relationship="Self.FK_plan_quantities_modal_details" FromRole="modal_details" ToRole="plan_quantities" />
+        </EntityType>
+        <EntityType Name="plan_quantities">
+          <Key>
+            <PropertyRef Name="pqid" />
+          </Key>
+          <Property Name="pqid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plan_quantity" Type="Int32" Nullable="false" />
+          <Property Name="plan_datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mid" Type="Int32" Nullable="false" />
+          <Property Name="loginid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Login" Relationship="Self.FK_plan_quantities_Logins" FromRole="plan_quantities" ToRole="Logins" />
+          <NavigationProperty Name="modal_details" Relationship="Self.FK_plan_quantities_modal_details" FromRole="plan_quantities" ToRole="modal_details" />
+        </EntityType>
+        <Association Name="FK_approve_quantities_approve_quantities">
+          <End Role="approve_quantities" Type="Self.approve_quantities" Multiplicity="1" />
+          <End Role="approve_quantities1" Type="Self.approve_quantities" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="approve_quantities">
+              <PropertyRef Name="aqid" />
+            </Principal>
+            <Dependent Role="approve_quantities1">
+              <PropertyRef Name="aqid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_approve_quantities_modal_details">
+          <End Role="modal_details" Type="Self.modal_details" Multiplicity="1" />
+          <End Role="approve_quantities" Type="Self.approve_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modal_details">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="approve_quantities">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dispatch_quantities_approve_quantities">
+          <End Role="approve_quantities" Type="Self.approve_quantities" Multiplicity="1" />
+          <End Role="dispatch_quantities" Type="Self.dispatch_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="approve_quantities">
+              <PropertyRef Name="aqid" />
+            </Principal>
+            <Dependent Role="dispatch_quantities">
+              <PropertyRef Name="aqid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dispatch_quantities_modal_details">
+          <End Role="modal_details" Type="Self.modal_details" Multiplicity="1" />
+          <End Role="dispatch_quantities" Type="Self.dispatch_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modal_details">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="dispatch_quantities">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_quantities_Logins">
+          <End Role="Logins" Type="Self.Login" Multiplicity="1" />
+          <End Role="plan_quantities" Type="Self.plan_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Logins">
+              <PropertyRef Name="loginid" />
+            </Principal>
+            <Dependent Role="plan_quantities">
+              <PropertyRef Name="loginid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_quantities_modal_details">
+          <End Role="modal_details" Type="Self.modal_details" Multiplicity="1" />
+          <End Role="plan_quantities" Type="Self.plan_quantities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modal_details">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="plan_quantities">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="approve_quantities" EntityType="Self.approve_quantities" />
+          <EntitySet Name="dispatch_quantities" EntityType="Self.dispatch_quantities" />
+          <EntitySet Name="Logins" EntityType="Self.Login" />
+          <EntitySet Name="modal_details" EntityType="Self.modal_details" />
+          <EntitySet Name="plan_quantities" EntityType="Self.plan_quantities" />
+          <AssociationSet Name="FK_approve_quantities_approve_quantities" Association="Self.FK_approve_quantities_approve_quantities">
+            <End Role="approve_quantities" EntitySet="approve_quantities" />
+            <End Role="approve_quantities1" EntitySet="approve_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_approve_quantities_modal_details" Association="Self.FK_approve_quantities_modal_details">
+            <End Role="modal_details" EntitySet="modal_details" />
+            <End Role="approve_quantities" EntitySet="approve_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dispatch_quantities_approve_quantities" Association="Self.FK_dispatch_quantities_approve_quantities">
+            <End Role="approve_quantities" EntitySet="approve_quantities" />
+            <End Role="dispatch_quantities" EntitySet="dispatch_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dispatch_quantities_modal_details" Association="Self.FK_dispatch_quantities_modal_details">
+            <End Role="modal_details" EntitySet="modal_details" />
+            <End Role="dispatch_quantities" EntitySet="dispatch_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_quantities_Logins" Association="Self.FK_plan_quantities_Logins">
+            <End Role="Logins" EntitySet="Logins" />
+            <End Role="plan_quantities" EntitySet="plan_quantities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_quantities_modal_details" Association="Self.FK_plan_quantities_modal_details">
+            <End Role="modal_details" EntitySet="modal_details" />
+            <End Role="plan_quantities" EntitySet="plan_quantities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VMSModelStoreContainer" CdmEntityContainer="VMSEntities">
+          <EntitySetMapping Name="approve_quantities">
+            <EntityTypeMapping TypeName="VMSModel.approve_quantities">
+              <MappingFragment StoreEntitySet="approve_quantities">
+                <ScalarProperty Name="aqid" ColumnName="aqid" />
+                <ScalarProperty Name="approve_quantity" ColumnName="approve_quantity" />
+                <ScalarProperty Name="approve_datetime" ColumnName="approve_datetime" />
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="loginid" ColumnName="loginid" />
+                <ScalarProperty Name="pqid" ColumnName="pqid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dispatch_quantities">
+            <EntityTypeMapping TypeName="VMSModel.dispatch_quantities">
+              <MappingFragment StoreEntitySet="dispatch_quantities">
+                <ScalarProperty Name="dqid" ColumnName="dqid" />
+                <ScalarProperty Name="dispatch_quantity" ColumnName="dispatch_quantity" />
+                <ScalarProperty Name="dispatch_datetime" ColumnName="dispatch_datetime" />
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="loginid" ColumnName="loginid" />
+                <ScalarProperty Name="aqid" ColumnName="aqid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="VMSModel.Login">
+              <MappingFragment StoreEntitySet="Logins">
+                <ScalarProperty Name="loginid" ColumnName="loginid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="userpass" ColumnName="userpass" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="modal_details">
+            <EntityTypeMapping TypeName="VMSModel.modal_details">
+              <MappingFragment StoreEntitySet="modal_details">
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="modal_name" ColumnName="modal_name" />
+                <ScalarProperty Name="modal_color" ColumnName="modal_color" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="plan_quantities">
+            <EntityTypeMapping TypeName="VMSModel.plan_quantities">
+              <MappingFragment StoreEntitySet="plan_quantities">
+                <ScalarProperty Name="pqid" ColumnName="pqid" />
+                <ScalarProperty Name="plan_quantity" ColumnName="plan_quantity" />
+                <ScalarProperty Name="plan_datetime" ColumnName="plan_datetime" />
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="loginid" ColumnName="loginid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

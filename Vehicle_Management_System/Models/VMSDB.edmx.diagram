@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="db35c2a84ed644ccbd574ad6903d81c4" Name="Diagram1">
+        <EntityTypeShape EntityType="VMSModel.approve_quantities" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VMSModel.dispatch_quantities" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VMSModel.Login" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VMSModel.modal_details" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VMSModel.plan_quantities" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="VMSModel.FK_approve_quantities_approve_quantities" ManuallyRouted="false" />
+        <AssociationConnector Association="VMSModel.FK_approve_quantities_modal_details" ManuallyRouted="false" />
+        <AssociationConnector Association="VMSModel.FK_dispatch_quantities_approve_quantities" ManuallyRouted="false" />
+        <AssociationConnector Association="VMSModel.FK_dispatch_quantities_modal_details" ManuallyRouted="false" />
+        <AssociationConnector Association="VMSModel.FK_plan_quantities_Logins" ManuallyRouted="false" />
+        <AssociationConnector Association="VMSModel.FK_plan_quantities_modal_details" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
