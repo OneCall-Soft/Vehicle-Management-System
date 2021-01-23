@@ -16,6 +16,7 @@ namespace Vehicle_Management_System.Models
         private DateTime dtfrom;
         private DateTime dtto;
         private List<PlanDispatcDetails> planlist =null;
+        private List<PlanDispatcDetails> planslist =null;  //new variable to save all data
 
 
         public VehicleMW()
